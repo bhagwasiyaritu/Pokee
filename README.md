@@ -115,9 +115,9 @@ npm test
 ## Screenshots IOS
 
 <p align="center">
-  <img src="./assets/screenshots/android/pokemonList.png" width="200"/>
-  <img src="./assets/screenshots/android/randomPokemonScreen.png" width="200"/>
-  <img src="./assets/screenshots/android/pokemonDetailScreen.png" width="200"/>
+  <img src="./assets/screenshots/ios/pokemonList.png" width="200"/>
+  <img src="./assets/screenshots/ios/randomPokemonScreen.png" width="200"/>
+  <img src="./assets/screenshots/ios/pokemonDetailScreen.png" width="200"/>
 </p>
 
 ## Screenshots Android
