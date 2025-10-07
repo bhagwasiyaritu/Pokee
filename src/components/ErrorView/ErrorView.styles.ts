@@ -4,12 +4,14 @@ import {
   FONT_SIZES,
   FONT_WEIGHTS,
 } from '../../constants/typography/Typography';
+import { COMMON_ALIGNMENT } from '../../constants/calc/Calc';
 
 const styles = StyleSheet.create({
   center: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    paddingHorizontal:COMMON_ALIGNMENT.horizontalPadding
   },
   errorText: {
     color: COLORS.red,

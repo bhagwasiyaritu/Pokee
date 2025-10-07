@@ -1,11 +1,9 @@
-import axios, { AxiosInstance } from "axios";
+import { ApolloClient, InMemoryCache, HttpLink } from '@apollo/client';
+import { BASE_URL } from './baseURL';
 
-const apiClient: AxiosInstance = axios.create({
-  baseURL: 'https://pokeapi.co/api/v2/pokemon', 
-  timeout: 10000,
-  headers: {
-    'Content-Type': 'application/json',
-  },
+const apiClient = new ApolloClient({
+  link: new HttpLink({ uri: `${BASE_URL}` }),
+  cache: new InMemoryCache(),
 });
 
 export default apiClient;

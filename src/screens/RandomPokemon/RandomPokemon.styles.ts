@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
   buttonContainer: {
     padding: COMMON_ALIGNMENT.verticalPadding,
     borderTopWidth: 1,
-    borderTopColor: COLORS.grey,
+    borderTopColor: COLORS.gray,
     backgroundColor: COLORS.white,
   },
   overlay: {

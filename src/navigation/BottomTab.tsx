@@ -10,14 +10,6 @@ import { verticalScale } from 'react-native-size-matters';
 
 const Tab = createBottomTabNavigator<RootTabParamList>();
 
-const ListIcon = (props: any) => (
-  <FontAwesome6 name="rectangle-list" {...props} />
-);
-
-const ChessRookIcon = (props: any) => (
-  <FontAwesome6 name="chess-rook" {...props} />
-);
-
 const BottomTab = () => {
   return (
     <Tab.Navigator
@@ -40,7 +32,13 @@ const BottomTab = () => {
         options={{
           headerShown: false,
           tabBarLabel: 'List',
-          tabBarIcon: ListIcon,
+          tabBarIcon: ({ focused }) => (
+            <FontAwesome6
+              name="rectangle-list"
+              size={24}
+              color={focused ? COLORS.primary : COLORS.darkGray}
+            />
+          ),
         }}
       />
       <Tab.Screen
@@ -49,7 +47,13 @@ const BottomTab = () => {
         options={{
           headerShown: false,
           tabBarLabel: 'Random',
-          tabBarIcon: ChessRookIcon,
+          tabBarIcon: ({ focused }) => (
+            <FontAwesome6
+              name="chess-rook"
+              size={24}
+              color={focused ? COLORS.primary : COLORS.darkGray}
+            />
+          ),
         }}
       />
     </Tab.Navigator>

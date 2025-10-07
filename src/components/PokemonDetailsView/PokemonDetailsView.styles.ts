@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
   image: {
     width: scale(200),
     height: verticalScale(200),
-    marginBottom: 20,
+    marginBottom: COMMON_ALIGNMENT.verticalMargin / 2,
   },
   name: {
     fontSize: FONT_SIZES['4xl'],
@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
   },
   infoRow: {
     flexDirection: 'row',
-    marginTop: 10,
+    marginTop: COMMON_ALIGNMENT.verticalMargin / 2,
     width: '80%',
     justifyContent: 'space-between',
   },
@@ -39,8 +39,17 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: FONT_SIZES['2xl'],
     fontWeight: FONT_WEIGHTS.bold,
-    marginTop: 30,
-    marginBottom: 10,
+    marginTop: COMMON_ALIGNMENT.verticalMargin,
+    marginBottom: COMMON_ALIGNMENT.verticalMargin / 2,
+  },
+  typesContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  typeImage: {
+    width: verticalScale(30),
+    height: verticalScale(30),
+    marginLeft: COMMON_ALIGNMENT.horizontalMargin / 2,
   },
 });
 

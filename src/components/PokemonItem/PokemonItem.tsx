@@ -1,13 +1,15 @@
-import { Text, TouchableOpacity } from 'react-native';
+import { Text, TouchableOpacity, View } from 'react-native';
 import React from 'react';
 import FastImage from 'react-native-fast-image';
 import styles from './PokemonItem.styles';
+import { PokemonType } from '../../types/types';
 
 type Props = {
   id: number;
   name: string;
-  image: string;
+  imageBaseUrl: string;
   onPress: () => void;
+  types: PokemonType[];
 };
 
 const PokemonItem = (props: Props) => {
@@ -20,17 +22,38 @@ const PokemonItem = (props: Props) => {
       style={styles.itemWrapper}
     >
       <FastImage
-        testID="character-image"
+        testID="pokemon-image"
         style={styles.image}
         source={{
-          uri: props.image,
+          uri: `${props.imageBaseUrl}${props.id}.png`,
           priority: FastImage.priority.normal,
         }}
         resizeMode={FastImage.resizeMode.contain}
       />
-      <Text style={styles.pokemonName}>
-        {props.name.charAt(0).toUpperCase() + props.name.slice(1)}
-      </Text>
+      <View style={styles.info}>
+        <Text testID="pokemon-name" style={styles.pokemonName}>
+          {props.name.charAt(0).toUpperCase() + props.name.slice(1)}
+        </Text>
+
+        {props.types && props.types.length > 0 && (
+          <View style={styles.typesContainer}>
+            {props.types.map(type => {
+              return (
+                <FastImage
+                  key={`${props.id}-type-${type.type_id}`}
+                  testID="pokemon-type-image"
+                  style={styles.typeImage}
+                  source={{
+                    uri: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/types/generation-iii/colosseum/${type.type_id}.png`,
+                    priority: FastImage.priority.normal,
+                  }}
+                  resizeMode={FastImage.resizeMode.contain}
+                />
+              );
+            })}
+          </View>
+        )}
+      </View>
     </TouchableOpacity>
   );
 };

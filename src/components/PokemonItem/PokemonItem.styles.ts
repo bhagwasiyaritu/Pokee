@@ -9,7 +9,6 @@ import { verticalScale } from 'react-native-size-matters';
 
 const styles = StyleSheet.create({
   itemWrapper: {
-    marginHorizontal: COMMON_ALIGNMENT.horizontalMargin,
     flexDirection: 'row',
     alignItems: 'center',
   },
@@ -22,8 +21,19 @@ const styles = StyleSheet.create({
     color: COLORS.black,
     fontSize: FONT_SIZES.md,
     fontWeight: FONT_WEIGHTS.medium,
-    marginHorizontal: COMMON_ALIGNMENT.horizontalMargin,
     flex: 1,
+  },
+  typeImage: {
+    width: verticalScale(30),
+    height: verticalScale(30),
+    marginRight: COMMON_ALIGNMENT.horizontalMargin / 2,
+  },
+  info: {
+    marginHorizontal: COMMON_ALIGNMENT.horizontalMargin,
+  },
+  typesContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
 });
 

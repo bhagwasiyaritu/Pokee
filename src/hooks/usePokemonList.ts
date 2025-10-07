@@ -1,55 +1,42 @@
-import { useState, useCallback } from 'react';
-import apiClient from '../services/apiClient';
-import { Pokemon, PokemonListResponse } from '../types/types';
+import { useQuery } from '@apollo/client/react';
+import { GET_POKEMON_LIST } from '../queries/queries';
+import { PokemonListResult } from '../types/types';
 
-const IMAGE_BASE_URL =
-  'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/';
-const PAGE_LIMIT = 10;
+const PAGE_LIMIT = 20;
 const TOTAL_POKEMON_COUNT = 151;
 
 export const usePokemonList = () => {
-  const [pokemons, setPokemons] = useState<Pokemon[]>([]);
-  const [offset, setOffset] = useState<number>(0);
-  const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<Error | null>(null);
-  const [hasMore, setHasMore] = useState<boolean>(true);
+  const { data, loading, error, fetchMore } = useQuery<PokemonListResult>(
+    GET_POKEMON_LIST,
+    {
+      variables: { limit: PAGE_LIMIT, offset: 0 },
+    },
+  );
+  const pokemons = data?.pokemon || [];
 
-  const loadMorePokemons = useCallback(async () => {
-    if (loading || !hasMore) {
-      return;
-    }
+  const loadMorePokemons = () => {
+    if (!data || loading) return;
 
-    setLoading(true);
-    setError(null);
+    const currentLength = pokemons.length;
+    if (currentLength >= TOTAL_POKEMON_COUNT) return;
 
-    try {
-      const response = await apiClient.get<PokemonListResponse>('/', {
-        params: { limit: PAGE_LIMIT, offset },
-      });
+    const remaining = TOTAL_POKEMON_COUNT - currentLength;
+    const limitForNextFetch = Math.min(PAGE_LIMIT, remaining);
 
-      const newPokemons = response.data.results.map(p => {
-        const id = p.url.split('/').filter(Boolean).pop() || '';
+    fetchMore({
+      variables: {
+        offset: currentLength,
+        limit: limitForNextFetch,
+      },
+      updateQuery: (prev, { fetchMoreResult }) => {
+        if (!fetchMoreResult) return prev;
         return {
-          ...p,
-          id,
-          imageUrl: `${IMAGE_BASE_URL}${id}.png`,
+          pokemon: [...prev.pokemon, ...fetchMoreResult.pokemon],
         };
-      });
+      },
+    });
+  };
 
-      setPokemons(prevPokemons => [...prevPokemons, ...newPokemons]);
-
-      const nextOffset = offset + PAGE_LIMIT;
-      setOffset(nextOffset);
-
-      if (nextOffset >= TOTAL_POKEMON_COUNT) {
-        setHasMore(false);
-      }
-    } catch (e) {
-      setError(e as Error);
-    } finally {
-      setLoading(false);
-    }
-  }, [loading, hasMore, offset]);
-
+  const hasMore = pokemons.length < TOTAL_POKEMON_COUNT;
   return { pokemons, loading, error, hasMore, loadMorePokemons };
 };

@@ -1,5 +1,5 @@
 import { View } from 'react-native';
-import React, { useEffect } from 'react';
+import React from 'react';
 import styles from './PokemonDetail.styles';
 import { usePokemonDetails } from '../../hooks/usePokemonDetails';
 import Loader from '../../components/Loader/Loader';
@@ -10,16 +10,13 @@ import { CommonLabels } from '../../constants/labels/Labels';
 import ErrorView from '../../components/ErrorView/ErrorView';
 import EmptyState from '../../components/EmptyState/EmptyState';
 import PokemonDetailsView from '../../components/PokemonDetailsView/PokemonDetailsView';
+import { IMAGE_BASE_URL } from '../../services/baseURL';
 
 const PokemonDetail = () => {
   const { params } = useRoute<RouteProp<RootStackParamList, 'PokemonDetail'>>();
   const navigation = useNavigation();
 
-  const { details, loading, error, fetchDetails } = usePokemonDetails();
-
-  useEffect(() => {
-    fetchDetails(params.pokemonId);
-  }, [params.pokemonId, fetchDetails]);
+  const { details, loading, error } = usePokemonDetails(params.pokemonId);
 
   if (loading) {
     return <Loader />;
@@ -30,7 +27,7 @@ const PokemonDetail = () => {
   }
 
   if (!details) {
-    return;
+    return <EmptyState message={CommonLabels.noDataFound} />;
   }
 
   return (
@@ -41,7 +38,7 @@ const PokemonDetail = () => {
         onPress={navigation.goBack}
       />
       {details ? (
-        <PokemonDetailsView details={details} />
+        <PokemonDetailsView details={details} imageBaseUrl={IMAGE_BASE_URL} />
       ) : (
         <EmptyState message={CommonLabels.noDataFound} />
       )}

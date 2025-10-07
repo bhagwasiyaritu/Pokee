@@ -9,6 +9,7 @@ const styles = StyleSheet.create({
   listContainer: {
     paddingHorizontal: COMMON_ALIGNMENT.horizontalPadding,
     paddingBottom: verticalScale(80),
+    paddingTop: COMMON_ALIGNMENT.verticalPadding,
   },
 });
 
