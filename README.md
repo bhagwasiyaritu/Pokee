@@ -115,10 +115,9 @@ npm test
 ## Screenshots IOS
 
 <p align="center">
-  <img src="./assets/screenshots/ios/eventList.png" width="200"/>
-  <img src="./assets/screenshots/ios/eventDetail.png" width="200"/>
-  <img src="./assets/screenshots/ios/eventParticipants.png" width="200"/>
-  <img src="./assets/screenshots/ios/createEvent.png" width="200"/>
+  <img src="./assets/screenshots/android/pokemonList.png" width="200"/>
+  <img src="./assets/screenshots/android/randomPokemonScreen.png" width="200"/>
+  <img src="./assets/screenshots/android/pokemonDetailScreen.png" width="200"/>
 </p>
 
 ## Screenshots Android
