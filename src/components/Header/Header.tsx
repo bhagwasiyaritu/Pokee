@@ -18,7 +18,7 @@ const Header = (props: Props) => {
           <FontAwesome6
             name={'arrow-left'}
             iconStyle={'solid'}
-            color={COLORS.black}
+            color={COLORS.white}
             size={30}
           />
         </TouchableOpacity>

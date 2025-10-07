@@ -2,22 +2,32 @@ import { useState, useCallback } from 'react';
 import apiClient from '../services/apiClient';
 import { Pokemon, PokemonListResponse } from '../types/types';
 
-const IMAGE_BASE_URL = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/';
+const IMAGE_BASE_URL =
+  'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/';
+const PAGE_LIMIT = 10;
+const TOTAL_POKEMON_COUNT = 151;
 
 export const usePokemonList = () => {
-  const [pokemons, setPokemons] = useState<Pokemon[] | null>(null);
+  const [pokemons, setPokemons] = useState<Pokemon[]>([]);
+  const [offset, setOffset] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<Error | null>(null);
+  const [hasMore, setHasMore] = useState<boolean>(true);
 
-  const fetchList = useCallback(async (limit: number = 10, offset: number = 0) => {
+  const loadMorePokemons = useCallback(async () => {
+    if (loading || !hasMore) {
+      return;
+    }
+
     setLoading(true);
     setError(null);
+
     try {
       const response = await apiClient.get<PokemonListResponse>('/', {
-        params: { limit, offset },
+        params: { limit: PAGE_LIMIT, offset },
       });
 
-      const enhancedResults: Pokemon[] = response.data.results.map(p => {
+      const newPokemons = response.data.results.map(p => {
         const id = p.url.split('/').filter(Boolean).pop() || '';
         return {
           ...p,
@@ -26,14 +36,20 @@ export const usePokemonList = () => {
         };
       });
 
-      setPokemons(enhancedResults);
+      setPokemons(prevPokemons => [...prevPokemons, ...newPokemons]);
 
+      const nextOffset = offset + PAGE_LIMIT;
+      setOffset(nextOffset);
+
+      if (nextOffset >= TOTAL_POKEMON_COUNT) {
+        setHasMore(false);
+      }
     } catch (e) {
       setError(e as Error);
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [loading, hasMore, offset]);
 
-  return { pokemons, loading, error, fetchList };
+  return { pokemons, loading, error, hasMore, loadMorePokemons };
 };

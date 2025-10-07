@@ -29,10 +29,10 @@ function AppContent() {
 
   return (
     <NavigationContainer>
-        <View style={[styles.container, { paddingTop: safeAreaInsets.top }]}>
-          <NavigationStack />
-        </View>
-      </NavigationContainer>
+      <View style={[styles.container, { paddingTop: safeAreaInsets.top }]}>
+        <NavigationStack />
+      </View>
+    </NavigationContainer>
   );
 }
 

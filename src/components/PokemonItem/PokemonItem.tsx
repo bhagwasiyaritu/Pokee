@@ -15,7 +15,7 @@ const PokemonItem = (props: Props) => {
     <TouchableOpacity
       testID="pokemon-item"
       activeOpacity={0.5}
-      key={props.id}
+      key={`${props.id} ${props.name}`}
       onPress={props.onPress}
       style={styles.itemWrapper}
     >
@@ -35,4 +35,4 @@ const PokemonItem = (props: Props) => {
   );
 };
 
-export default PokemonItem;
+export default React.memo(PokemonItem);

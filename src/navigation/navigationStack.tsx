@@ -2,17 +2,17 @@ import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import { RootStackParamList } from './navigationTypes';
-import PokemonList from '../screens/PokemonList/PokemonList';
 import PokemonDetail from '../screens/PokemonDetail/PokemonDetail';
+import BottomTab from './BottomTab';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 const NavigationStack = () => {
   return (
-    <Stack.Navigator initialRouteName="PokemonList">
+    <Stack.Navigator initialRouteName="BottomTab">
       <Stack.Screen
-        name="PokemonList"
-        component={PokemonList}
+        name="BottomTab"
+        component={BottomTab}
         options={{ headerShown: false }}
       />
       <Stack.Screen
